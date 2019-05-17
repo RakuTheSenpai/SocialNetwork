@@ -14,24 +14,19 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <main>
-    <ul id="slide-out" class="sidenav">
-        <li>
-            <div class="user-view">
-                <a href=""><span class="white-text name">John Doe</span></a>
-                <a href=""><span class="white-text email">jdandturk@gmail.com</span></a>
-            </div>
-        </li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-    </ul>
-    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="medium material-icons">menu</i></a>
     <div ng-controller='myAppCtrl'>
         <div ng-view></div>
+        <div class="row bottom">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a href="" ng-click="change('#!/upload')"><i class="material-icons">add</i></a>
+                    </li>
+                    <li class="tab col s3"><a href="" ng-click="change('#!/swipe')" class="active">Swipe</a></li>
+                    <li class="tab col s3"><a href="" ng-click="change('#!/chat')">Chat</a></li>
+                    <li class="tab col s3"><a href="" ng-click="change('#!/profile')">Profile</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
 </main>
@@ -46,6 +41,13 @@
 <script src="lib/amazon-cognito-identity.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/config.js"></script>
-<script src="js/sidenav.js"></script>
+<script src="js/tabs.js"></script>
+<script src="js/login.js"></script>
+<script src="js/register.js"></script>
+<script src="js/upload.js"></script>
+<script src="js/swipe.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/chat.js"></script>
+
 
 </html>

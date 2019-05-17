@@ -19,11 +19,16 @@
         <div class="row bottom">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s3"><a href="" ng-click="change('#!/upload')"><i class="material-icons">add</i></a>
+                    <li class="tab col s3"><a href="" ng-click="change('#!/upload')"><i
+                                class="material-icons">add</i></a>
                     </li>
-                    <li class="tab col s3"><a href="" ng-click="change('#!/swipe')" class="active">Swipe</a></li>
-                    <li class="tab col s3"><a href="" ng-click="change('#!/chat')">Chat</a></li>
-                    <li class="tab col s3"><a href="" ng-click="change('#!/profile')">Profile</a></li>
+                    <li class="tab col s3"><a href="" ng-click="change('#!/swipe')" class="active"><i
+                                class="material-icons">sentiment_very_satisfied
+                            </i></a></li>
+                    <li class="tab col s3"><a href="" ng-click="change('#!/chat')"><i
+                                class="material-icons">chat</i></a></li>
+                    <li class="tab col s3"><a href="" ng-click="change('#!/profile');signOut()"><i
+                                class="material-icons">person</i></a></li>
                 </ul>
             </div>
         </div>
@@ -34,6 +39,7 @@
 
 </footer>
 <script src="lib/jquery-3.1.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script src="lib/angular.js"></script>
 <script src="lib/angular-route.js"></script>
 <script src="lib/materialize.js"></script>
@@ -48,6 +54,7 @@
 <script src="js/swipe.js"></script>
 <script src="js/profile.js"></script>
 <script src="js/chat.js"></script>
+<script src="js/verify.js"></script>
 
 
 </html>

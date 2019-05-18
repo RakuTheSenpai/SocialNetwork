@@ -81,6 +81,41 @@ angular.module('myApp.register', ['ngRoute'])
                     }
                 }
             );
-
+            var req = {
+                method: 'POST',
+                url: _config.api.invokeUrl + '/putrecipe',
+                headers: {
+                    Authorization: authToken
+                },
+                data: {
+                    Timestamp: timestamp,
+                    Ingredients: {
+                        Water: water,
+                        Hops: hops,
+                        Yeast: yeasts,
+                        Syrup: syrups
+                    },
+                    Name: name,
+                    Restrictions: restrictions,
+                }
+            }
+            $http(req).then(function successCallback(response) {
+                console.log('Success');
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'You recipe was registered.',
+                    imageUrl: '/stickers/victoryko.png',
+                    imageWidth: 250,
+                    imageHeight: 200,
+                    imageAlt: 'success',
+                    animation: true,
+                    confirmButtonColor: '#f08080'
+                })
+                window.location.href = "#!/home"
+            }, function errorCallback(response) {
+                console.error('Error');
+            });
         }
+
+
     }]);;

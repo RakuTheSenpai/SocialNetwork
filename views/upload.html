@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FilePond from CDN</title>
+
+  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+  <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../css/filepond.css" >
+
+</head>
+<body>
+    <h4 style="color: rgba(238, 110, 115, 0.7);" align="center">Upload a Meme</h4>
+    <br>
+    <style>
+        .filepond--root {
+            width: 350px;
+            height: 350px;
+        }
+    </style>
+    <div class="container">
+            <div class="col s6">
+                <input type="file" class="filepond" name="filepond" accept="image/png, image/jpeg, image/gif"/>
+                <br>
+                <!--<div> class="chips"</div>-->
+                <div style="text-align: center">
+                        <a class="waves-effect waves-light btn"><i class="material-icons" name="upload">arrow_upward</i></a>
+                </div>
+
+
+            </div>
+        
+    </div>
+    
+</body>
+<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+<script src="../js/upload.js"></script>
+
+</html>

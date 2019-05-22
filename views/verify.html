@@ -4,12 +4,12 @@
     <div class="row"></div>
     <div class="row">
         <div class="col s8 offset-s2">
-            <h1 style="color: rgba(238, 110, 115, 0.7);" align="center">MEMA</h1>
             <form name="verifyForm">
                 <input name="email" type="email" placeholder="Email" ng-model="email" required>
                 <input name="vcode" type="text" placeholder="Verification Code" ng-model="vcode" required>
                 <div style="text-align: center">
-                        <a class="btn waves-effect waves-light red lighten-2 black-text" ng-click="handleVerify()" ng-disabled="
+                    <a class="btn waves-effect waves-light red lighten-2 black-text" ng-click="handleVerify()"
+                        ng-disabled="
                         verifyForm.email.$dirty && verifyForm.email.$invalid ||
                         verifyForm.vcode.$dirty && verifyForm.vcode.$invalid ||
                         verifyForm.$invalid
@@ -17,8 +17,8 @@
                 </div>
             </form>
             <div style="text-align: center">
-                    <a href="" ng-click="resendVerify()">Resend Code</a>
-                </div>
+                <a href="" ng-click="resendVerify()">Resend Code</a>
+            </div>
         </div>
     </div>
 

@@ -9,3 +9,18 @@ ul > :last-child {
 .carousel .carousel-item{
   width:100%;
 }
+div.square {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  height: 300px;
+  width: 300px;
+  background-color: rgb(249, 208, 253);
+}
+
+.img-center {
+  opacity: 1;
+  object-fit: fill;
+  object-position: 50% 50%;
+  object-position: 0 0;
+}

@@ -1,46 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <html>
-<div ng-controller='ProfileCtrl'>
-        <body>
-                <div class="container">
-                    <div class="row">
-                            <meta name="viewport" content="width=device-width, initial-scale=1">
-                        <style>        
-                                div.square{  
-                                position: relative;
-                                margin-left: auto;
-                                margin-right: auto;
-                                height: 300px;
-                                width: 300px;
-                                background-color: rgb(249, 208, 253);
-                                }
-                                img{
-                                    opacity: 1 ;
-                                    object-fit: fill;
-                                    object-position: 50% 50%; 
-                                    object-position: 0 0;
-                                }
-                        </style>
-                        <div class="square">
-                            <div class="col s6 push-s1 center-align">
-                        <img  width="225" height="300" src="../pics/frog.jpg"> 
-                        </div>
-                    </div>                         
-                        </div>
+<div ng-controller='SwipeCtrl'>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <div class="square">
+                    <div class="col s6 push-s1 center-align">
+                        <img class="img-center" width="225" height="300" src="../pics/{{currentimage}}">
                     </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col s12 center">
-                                <div class="col s6 push-s1">
-                            <button class="waves-effect waves-light red btn-large">-</button> 
-                        </div>
-                        <div class="col s6 pull-s1">
-                            <button class="waves-effect waves-light green btn-large">+</button>
-                        </div>
-                        </div>
-                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col s12 center">
+                    <div class="col s6 push-s1">
+                        <button class="waves-effect waves-light red btn-large">-</button>
                     </div>
-        </body>
+                    <div class="col s6 pull-s1">
+                        <button class="waves-effect waves-light green btn-large">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </div>
 
 </html>

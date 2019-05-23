@@ -8,8 +8,9 @@ angular.module('myApp.upload', ['ngRoute'])
         });
     }])
     .controller('UploadCtrl', ['$scope', '$http', function ($scope, $http) {
-        var file;
-        var filename;
+        var user = "";
+        var file = "";
+        var filename = "";
         var poolData = {
             UserPoolId: _config.cognito.userPoolId,
             ClientId: _config.cognito.userPoolClientId
@@ -21,6 +22,27 @@ angular.module('myApp.upload', ['ngRoute'])
         window.authToken.then(function setAuthToken(token) {
             if (token) {
                 authToken = token;
+                var req = {
+                    method: 'POST',
+                    url: _config.api.invokeUrl + '/getusuariomema',
+                    headers: {
+                        Authorization: authToken
+                    },
+                    data: {
+
+                    }
+                };
+                $http(req).then(function successCallback(response) {
+                    if (response.data.Items.length > 0) {
+                        user = response.data.Items[0].Username;
+                    }
+                    else {
+                        window.location.href = "#!/info";
+                    }
+
+                }, function errorCallback(response) {
+                    console.error(response);
+                });
             } else {
                 window.location.href = '#!/login';
             }
@@ -52,46 +74,38 @@ angular.module('myApp.upload', ['ngRoute'])
         pond.addEventListener('FilePond:addfile', e => {
             file = e.detail.file.getFileEncodeBase64String();
             filename = e.detail.file.filename;
+            $scope.file_up = false;
+        });
+        pond.addEventListener('FilePond:removefile', e => {
+            $scope.file_up = true;
+        });
+        pond.addEventListener('FilePond:error', e => {
+            $scope.file_up = true;
         });
         $scope.upload = function () {
             //DynamoDB and S3
             var timestamp = Math.floor(Date.now() / 1000);
-            var req = {
+            var req2 = {
                 method: 'POST',
-                url: _config.api.invokeUrl + '/getusuariomema',
+                url: _config.api.invokeUrl + '/putmeme',
                 headers: {
                     Authorization: authToken
                 },
                 data: {
-
+                    Usuario: user,
+                    Timestamp: timestamp,
+                    Filename: filename,
+                    File: file,
                 }
             };
-            $http(req).then(function successCallback(response) {
-                var user = response.data.Items[0].Username;
-                var req2 = {
-                    method: 'POST',
-                    url: _config.api.invokeUrl + '/putmeme',
-                    headers: {
-                        Authorization: authToken
-                    },
-                    data: {
-                        Usuario: user,
-                        Timestamp: timestamp,
-                        Filename: filename,
-                        File: file,
-                    }
-                };
-                $http(req2).then(function successCallback(response) {
-                    Swal.fire({
-                        title: 'Image Uploaded!',
-                        text: 'Nice job, Gamer.',
-                        type: 'success',
-                        confirmButtonColor: '#f08080'
-                    });
-                    window.location.href = '#!/login';
-                }, function errorCallback(response) {
-                    console.error(response);
+            $http(req2).then(function successCallback(response) {
+                Swal.fire({
+                    title: 'Image Uploaded!',
+                    text: 'Nice job, Gamer.',
+                    type: 'success',
+                    confirmButtonColor: '#f08080'
                 });
+                window.location.href = '#!/swipe';
             }, function errorCallback(response) {
                 console.error(response);
             });

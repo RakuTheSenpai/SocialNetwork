@@ -8,6 +8,8 @@ angular.module('myApp.upload', ['ngRoute'])
         });
     }])
     .controller('UploadCtrl', ['$scope', '$http', function ($scope, $http) {
+        var file;
+        var filename;
         var poolData = {
             UserPoolId: _config.cognito.userPoolId,
             ClientId: _config.cognito.userPoolClientId
@@ -38,19 +40,22 @@ angular.module('myApp.upload', ['ngRoute'])
 
         FilePond.create(document.querySelector('input[type="file"]'),
             {
-                imagePreviewHeight: 320,
+                //imagePreviewHeight: 360,
                 imageCropAspectRatio: '1:1',
-                imageResizeTargetWidth: 360,
-                imageResizeTargetHeight: 360,
+                // imageResizeTargetWidth: 360,
+                // imageResizeTargetHeight: 360,
                 styleLoadIndicatorPosition: 'center bottom',
                 styleButtonRemoveItemPosition: 'center bottom'
             }
         );
         const pond = document.querySelector('.filepond--root');
         pond.addEventListener('FilePond:addfile', e => {
-            console.log(authToken);
-            var file = e.detail.file.file;
-            var filename = e.detail.file.filename;
+            file = e.detail.file.getFileEncodeBase64String();
+            filename = e.detail.file.filename;
+        });
+        $scope.upload = function () {
+            //DynamoDB and S3
+            var timestamp = Math.floor(Date.now() / 1000);
             var req = {
                 method: 'POST',
                 url: _config.api.invokeUrl + '/getusuariomema',
@@ -62,14 +67,35 @@ angular.module('myApp.upload', ['ngRoute'])
                 }
             };
             $http(req).then(function successCallback(response) {
-                console.log('Success');
-                var user = response.data.Items;
-                
+                var user = response.data.Items[0].Username;
+                var req2 = {
+                    method: 'POST',
+                    url: _config.api.invokeUrl + '/putmeme',
+                    headers: {
+                        Authorization: authToken
+                    },
+                    data: {
+                        Usuario: user,
+                        Timestamp: timestamp,
+                        Filename: filename,
+                        File: file,
+                    }
+                };
+                $http(req2).then(function successCallback(response) {
+                    Swal.fire({
+                        title: 'Image Uploaded!',
+                        text: 'Nice job, Gamer.',
+                        type: 'success',
+                        confirmButtonColor: '#f08080'
+                    });
+                    window.location.href = '#!/login';
+                }, function errorCallback(response) {
+                    console.error(response);
+                });
             }, function errorCallback(response) {
-                console.error('Error');
                 console.error(response);
             });
 
-        });
+        }
     }]);
 

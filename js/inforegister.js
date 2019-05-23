@@ -7,7 +7,7 @@ angular.module('myApp.info', ['ngRoute'])
             templateUrl: 'views/inforegister.html',
         });
     }])
-    .controller('InfoCtrl', ['$scope', function ($scope) {
+    .controller('InfoCtrl', ['$scope', '$http', function ($scope, $http) {
         var authToken;
         window.authToken.then(function setAuthToken(token) {
             if (token) {
@@ -33,6 +33,31 @@ angular.module('myApp.info', ['ngRoute'])
                 window.location.href = '#!/login';
             }
         }).catch(function handleTokenError(error) {
-            window.location.href = '#!/login';
+            console.log(error);
         });
+        $scope.confirm = function () {
+            window.location.href = '#!/login';
+            var req = {
+                method: 'POST',
+                url: _config.api.invokeUrl + '/putusuariomema',
+                headers: {
+                    Authorization: authToken
+                },
+                data: {
+                    Username: $scope.username,
+                    Age: $scope.age,
+                }
+            };
+            $http(req).then(function successCallback(response) {
+                Swal.fire({
+                    title: 'Thank You!',
+                    text: 'You have completed your registration.',
+                    type: 'success',
+                    confirmButtonColor: '#f08080'
+                });
+                //window.location.href = '#!/swipe';
+            }, function errorCallback(response) {
+                console.error(response);
+            });
+        }
     }]);;

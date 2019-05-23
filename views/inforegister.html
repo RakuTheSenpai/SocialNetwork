@@ -6,20 +6,14 @@
         <div class="col s8 offset-s2">
             <form name="registerForm">
                 <input type="text" placeholder="Username" name="email" ng-model="username" required>
-                <input type="number" placeholder="Age" name="age" ng-model="username" required
-                    pattern="^[a-zA-Z0-9\sñÑ]*$">
+                <input type="number" placeholder="Age" name="age" ng-model="age" required pattern="^[0-9]*$">
                 <div style="text-align: center">
                     <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="handleRegister()"
                         ng-disabled="registerForm.age.$dirty && registerForm.age.$invalid || registerForm.user.$dirty && registerForm.user.$invalid
                         || registerForm.$invalid">Confirm</a> </div>
             </form>
-            <div style="text-align: center">
-                <a href="#!/login"> Already Have an Account?</a>
-            </div>
-
         </div>
     </div>
 
 </div>
-
 </html>

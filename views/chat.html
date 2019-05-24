@@ -10,7 +10,8 @@
         </a>
     </div>
     <ul>
-        <li ng-repeat="message in messages">
+        <!-- <li ng-repeat="message in messages[channel]"> -->
+            <li ng-repeat="message in currentMessages">
             <span class="title">{{ message.sender_uuid }}</span>
             <p>{{ message.date | date:"MM/dd/yyyy 'at' h:mma"}}</br> {{ message.content }}</p>
         </li>

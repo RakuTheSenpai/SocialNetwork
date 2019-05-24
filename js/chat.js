@@ -6,12 +6,11 @@ angular.module('myApp.chat', ['ngRoute',"pubnub.angular.service"])
             templateUrl: 'views/chat.html',
         });
     }])
-    .controller('ChatCtrl', function($scope, Pubnub) {
-        
+    .controller('ChatCtrl', ['$scope', '$http', 'Pubnub', function($scope, $http, Pubnub) {
         // Listening to the callbacks
         $scope.$on(Pubnub.getMessageEventNameFor($scope.channel), function (ngEvent, m) {
-            $scope.$apply(function () {
-                $scope.messages.push(m);
+            $scope.$apply(function () { 
+                $scope.currentMessages.push(m);
             });
         });
 
@@ -28,13 +27,34 @@ angular.module('myApp.chat', ['ngRoute',"pubnub.angular.service"])
                      date: new Date()
                  }, 
                  callback: function(m) {
+                     console.log("El siguiente mensaje se publico a "+$scope.channel);
                      console.log(m);
                  }
              });
              // Reset the messageContent input
              $scope.messageContent = '';
-         }
+        }
 
+        $scope.changeContact = function(contact){
+            if($scope.user > contact){
+                $scope.channel = $scope.user + "|" + contact;
+            }else{
+                $scope.channel = contact + "|" + $scope.user;
+            }
+            Pubnub.subscribe({
+                channel: $scope.channel,
+                triggerEvents: ['callback']
+            });
+            Pubnub.history({
+                channel: $scope.channel,
+                callback: function(m) {
+                    console.log(m);
+                    $scope.currentMessages.length = 0;
+                    angular.extend($scope.currentMessages, m[0]);
+                },
+                count: 20
+            });
+        }
 
         $scope.initChat = function(){
             Pubnub.init({
@@ -42,58 +62,64 @@ angular.module('myApp.chat', ['ngRoute',"pubnub.angular.service"])
                 subscribe_key: 'sub-c-157f2f30-7c0e-11e9-a950-f249fab64e16',
                 uuid: $scope.user
             });
-            
-            $scope.channel = 'messages-channel';
-            Pubnub.subscribe({
-                channel: $scope.channel,
-                triggerEvents: ['callback']
-            });
-            Pubnub.history({
-                channel: $scope.channel,
-                callback: function(m) {
-                    console.log(m);
-                    angular.extend($scope.messages, m[0]); //This empties messages.
-                },
-                count: 20
-            });
+            $scope.changeContact($scope.contacts[0]);
         }
 
-        $scope.changeContact = function(contact){
-            // Pubnub.unsubscribe({
-            //     channel: $scope.channel
-            // }); //Esto me regresa un error raro de CORB :(
-            // console.log("Desuscrito :(")
-            $scope.channel = contact;
-            $scope.currentContact = contact;
-            Pubnub.subscribe({
-                channel: $scope.channel,
-                triggerEvents: ['callback']
-            });
-            // console.log("Suscrito :)")
-            console.log(contact);
-            Pubnub.history({
-                channel: $scope.channel,
-                callback: function(m) {
-                    console.log(m);
-                    angular.extend($scope.messages, m[0]); //This empties messages.
-                },
-                count: 20
-            });
-        }
-
-        $scope.user = "Chouza"; //Should be the current user, not the current contact from the chat.
+        
         $scope.channel = "";
-        $scope.currentContact = "";
-        $scope.contacts = [
-            "Raku",
-            "Jkks",
-            "Brenda",
-            "Sergio",
-            "Sachy",
-            "messages-channel"
-        ];
-        $scope.messages = [];
-        $scope.initChat();
-        // $scope.changeContact($scope.contacts[0]);
-    });
+        $scope.contacts = [];
+        $scope.currentMessages = [];
+        var authToken;
+        window.authToken.then(function setAuthToken(token) {
+            if (token) {
+                authToken = token;
+                var req = {
+                    method: 'POST',
+                    url: _config.api.invokeUrl + '/getusuariomema',
+                    headers: {
+                        Authorization: authToken
+                    },
+                    data: {
+
+                    }
+                };
+                $http(req).then(function successCallback(response) {
+                    if (response.data.Items.length > 0) {
+                        $scope.user = response.data.Items[0].Username;
+                        console.log("User is " + $scope.user);
+                        req = {
+                            method: 'POST',
+                            url: _config.api.invokeUrl + '/getmatches',
+                            headers: {
+                                Authorization: authToken
+                            },
+                            data: {}
+                        };
+                        $http(req).then(function successCallback(response) {
+                            response.data.Items.forEach(element => {
+                                $scope.contacts.push(element.Datos.Username);
+                                var chan = $scope.user + "|" + element.Datos.Username;
+                            });
+                            $scope.initChat();
+                        }, function errorCallback(response) {
+                            console.error(response);
+                        });
+
+                        }
+                    else {
+                        window.location.href = "#!/info";
+                    }
+
+                }, function errorCallback(response) {
+                    console.error(response);
+                });
+            } else {
+                window.location.href = '#!/login';
+            }
+        }).catch(function handleTokenError(error) {
+            Swal.fire(error);
+            window.location.href = '#!/login';
+        });
+        
+    }]);
     

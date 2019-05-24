@@ -11,7 +11,6 @@
     </div>
     <ul>
         <li ng-repeat="message in messages">
-            <!-- <img src="{{avatarUrl(message.sender_uuid)}}" alt="{{message.sender_uuid}}"> -->
             <span class="title">{{ message.sender_uuid }}</span>
             <p>{{ message.date | date:"MM/dd/yyyy 'at' h:mma"}}</br> {{ message.content }}</p>
         </li>

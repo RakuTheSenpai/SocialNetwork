@@ -2,25 +2,11 @@ ul > :last-child {
     margin-top: auto;
   }
 .bottom { 
-    position:absolute;                  
+    position:fixed;                  
     bottom:0;   
-    width: 100%                                             
+    width: 100%;
+    overflow: hidden;                                           
 } 
 .carousel .carousel-item{
   width:100%;
-}
-div.square {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  height: 300px;
-  width: 300px;
-  background-color: rgb(249, 208, 253);
-}
-
-.img-center {
-  opacity: 1;
-  object-fit: fill;
-  object-position: 50% 50%;
-  object-position: 0 0;
 }

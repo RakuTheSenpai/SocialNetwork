@@ -5,24 +5,17 @@
     <body>
         <div class="container">
             <div class="row">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                <div class="square">
-                    <div class="col s6 push-s1 center-align">
-                        <img class="img-center" width="225" height="300" src="../pics/{{currentimage}}">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
                 <div class="col s12 center">
-                    <div class="col s6 push-s1">
-                        <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="next('like')"
-                            ng-disabled="memes.length==0"><i class="material-icons">check</i></a>
-                    </div>
-                    <div class="col s6 pull-s1">
-                        <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="next('dislike')"
-                            ng-disabled="memes.length==0"><i class="material-icons">close</i></a>
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="../pics/{{currentimage}}" style="min-height: 300px;height: auto;overflow: auto;">
+                        </div>
+                        <div class="card-action">
+                            <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="next('like')"
+                                ng-disabled="memes.length==0"><i class="material-icons">check</i></a>
+                            <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="next('dislike')"
+                                ng-disabled="memes.length==0"><i class="material-icons">close</i></a>
+                        </div>
                     </div>
                 </div>
             </div>

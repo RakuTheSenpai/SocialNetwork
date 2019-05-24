@@ -15,18 +15,18 @@ angular.module('myApp.login', ['ngRoute'])
         var userPool;
         userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
         var authToken;
-        window.authToken.then(function setAuthToken(token) {
-            if (token) {
-                window.location.href = '#!/swipe';
-            }
-        }).catch(function handleTokenError(error) {
-            Swal.fire({
-                type: 'error',
-                title: 'Something went wrong!',
-                text: error,
-                confirmButtonColor: '#f08080'
-            });
-        });
+        // window.authToken.then(function setAuthToken(token) {
+        //     if (token) {
+        //         window.location.href = '#!/swipe';
+        //     }
+        // }).catch(function handleTokenError(error) {
+        //     Swal.fire({
+        //         type: 'error',
+        //         title: 'Something went wrong!',
+        //         text: error,
+        //         confirmButtonColor: '#f08080'
+        //     });
+        // });
         $scope.handleSignin = function () {
             var email = $scope.email;
             var password = $scope.pswd;

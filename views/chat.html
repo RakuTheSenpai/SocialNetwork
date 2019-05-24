@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<html>
+<div ng-controller="ChatCtrl">
+    <div>
+        <h4>People</h4>
+    </div>
+    <div>
+        <a ng-repeat="contact in contacts" class="btn waves-effect waves-light red lighten-2 white-text" ng-click="changeContact(contact)">
+            {{contact}}
+        </a>
+    </div>
+    <ul>
+        <li ng-repeat="message in messages">
+            <!-- <img src="{{avatarUrl(message.sender_uuid)}}" alt="{{message.sender_uuid}}"> -->
+            <span class="title">{{ message.sender_uuid }}</span>
+            <p>{{ message.date | date:"MM/dd/yyyy 'at' h:mma"}}</br> {{ message.content }}</p>
+        </li>
+    </ul> 
+    <input ng-model="messageContent" type="text" placeholder="Type your message" />
+    <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="sendMessage()">Send</a>
+</div>
+</html>

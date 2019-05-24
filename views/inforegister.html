@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<html>
+<div ng-controller='InfoCtrl'>
+    <div class="row"></div>
+    <div class="row">
+        <div class="col s8 offset-s2">
+            <form name="registerForm">
+                <input type="text" placeholder="Username" name="email" ng-model="username" required>
+                <input type="number" placeholder="Age" name="age" ng-model="age" required pattern="^[0-9]*$">
+                <div style="text-align: center">
+                    <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="confirm()"
+                        ng-disabled="registerForm.age.$dirty && registerForm.age.$invalid || registerForm.user.$dirty && registerForm.user.$invalid
+                        || registerForm.$invalid">Confirm</a> </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</html>

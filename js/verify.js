@@ -26,7 +26,12 @@ angular.module('myApp.verify', ['ngRoute'])
             event.preventDefault();
             verify(email, code,
                 function verifySuccess(result) {
-                    Swal.fire('Verification successful. You will now be redirected to the login page.');
+                    Swal.fire({
+                        title: 'Verification successful!',
+                        text: 'You will now be redirected to the login page.',
+                        type: "Success",
+                        confirmButtonColor: '#f08080'
+                    });
                     window.location.href = '#!/login';
                 },
                 function verifyError(err) {

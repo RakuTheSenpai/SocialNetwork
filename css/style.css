@@ -2,9 +2,10 @@ ul > :last-child {
     margin-top: auto;
   }
 .bottom { 
-    position:absolute;                  
+    position:fixed;                  
     bottom:0;   
-    width: 100%                                             
+    width: 100%;
+    overflow: hidden;                                           
 } 
 .carousel .carousel-item{
   width:100%;

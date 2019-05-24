@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<html>
+<div ng-controller='SwipeCtrl'>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col s12 center">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="../pics/{{currentimage}}" style="min-height: 300px;height: auto;overflow: auto;">
+                        </div>
+                        <div class="card-action">
+                            <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="next('like')"
+                                ng-disabled="memes.length==0"><i class="material-icons">check</i></a>
+                            <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="next('dislike')"
+                                ng-disabled="memes.length==0"><i class="material-icons">close</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</div>
+
+</html>

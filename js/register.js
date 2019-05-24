@@ -81,6 +81,8 @@ angular.module('myApp.register', ['ngRoute'])
                     }
                 }
             );
-
+            
         }
+
+
     }]);;

@@ -12,22 +12,29 @@
     <link href="css/materialize.css" rel="stylesheet" type="text/css">
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/filepond.css">
+
 </head>
 <main>
+
     <div ng-controller='myAppCtrl'>
+        <h3 style="color: rgba(238, 110, 115, 0.7);" align="center">MiiMA</h3>
         <div ng-view></div>
         <div class="row bottom">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s3"><a href="" ng-click="change('#!/upload')"><i
+                    <li class="tab col s3"><a id="add" href="" ng-click="change('#!/upload')"><i
                                 class="material-icons">add</i></a>
                     </li>
-                    <li class="tab col s3"><a href="" ng-click="change('#!/swipe')" class="active"><i
+                    <li class="tab col s3"><a id="swipe" href="" ng-click="change('#!/swipe')" class="active"><i
                                 class="material-icons">sentiment_very_satisfied
                             </i></a></li>
-                    <li class="tab col s3"><a href="" ng-click="change('#!/chat')"><i
+                    <li class="tab col s3"><a id="chat" href="" ng-click="change('#!/chat')"><i
                                 class="material-icons">chat</i></a></li>
-                    <li class="tab col s3"><a href="" ng-click="change('#!/profile');signOut()"><i
+                    <li class="tab col s3"><a id="profile" href="" ng-click="change('#!/profile');signOut()"><i
                                 class="material-icons">person</i></a></li>
                 </ul>
             </div>
@@ -57,5 +64,18 @@
 <script src="js/verify.js"></script>
 <script src="https://cdn.pubnub.com/pubnub-3.7.21.js"></script>
 <script src="https://cdn.pubnub.com/sdk/pubnub-angular/pubnub-angular-3.2.1.js"></script>
+<script src="js/inforegister.js"></script>
+<script
+    src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+<script src="https://cdn.pubnub.com/pubnub-3.7.21.js"></script>
+<script src="https://cdn.pubnub.com/sdk/pubnub-angular/pubnub-angular-3.2.1.js"></script>
+
 
 </html>

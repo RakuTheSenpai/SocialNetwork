@@ -17,12 +17,12 @@
             <div class="row">
                 <div class="col s12 center">
                     <div class="col s6 push-s1">
-                        <a class="btn waves-effect waves-light red lighten-2 white-text"><i class="material-icons"
-                                name="upload">check</i></a>
+                        <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="next('like')"
+                            ng-disabled="memes.length==0"><i class="material-icons">check</i></a>
                     </div>
                     <div class="col s6 pull-s1">
-                        <a class="btn waves-effect waves-light red lighten-2 white-text"><i class="material-icons"
-                                name="upload">close</i></a>
+                        <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="next('dislike')"
+                            ng-disabled="memes.length==0"><i class="material-icons">close</i></a>
                     </div>
                 </div>
             </div>

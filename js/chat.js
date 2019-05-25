@@ -56,10 +56,6 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                 },
                 count: 20
             });
-            var elems = document.querySelectorAll('.tooltipped');
-            var instances = M.Tooltip.init(elems);
-            var bottom = document.getElementById("bottom");
-            bottom.scrollTop = bottom.scrollHeight;
         }
 
         $scope.initChat = function () {
@@ -127,4 +123,12 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
             window.location.href = '#!/login';
         });
 
-    }]);
+    }]).directive('myRepeatDirective', function () {
+        return function (scope, element, attrs) {
+            if (scope.$last) {
+                var elems = document.querySelectorAll('.tooltipped');
+                var instances = M.Tooltip.init(elems);
+                document.getElementById('bottom').scrollTop = 9999999;
+            }
+        };
+    });

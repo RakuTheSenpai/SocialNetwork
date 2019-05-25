@@ -15,7 +15,7 @@
             <h3 style="color: rgba(238, 110, 115, 0.7);" class="flow-text">{{currentContact}}</h3>
         </div>
         <div id = "bottom" class="col s8 offset-s2" style="max-height: 300px; height: auto;overflow-y: scroll">
-            <div class="card" ng-repeat="message in currentMessages">
+            <div class="card" ng-repeat="message in currentMessages" my-repeat-directive>
                 <div class="card-content"
                     style="background-color:{{message.sender_uuid != user ? 'white' : 'rgba(238, 110, 115, 0.7)'}};color:{{message.sender_uuid != user ?  'rgba(238, 110, 115, 0.7)':'white'}}; text-align:{{message.sender_uuid != user ? 'left' : 'right'}}">
                     <div class="tooltipped" data-position="top" data-tooltip="{{ message.date | date:"MM/dd/yyyy 'at' h:mma"}">

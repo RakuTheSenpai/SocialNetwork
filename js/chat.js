@@ -56,6 +56,10 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                 },
                 count: 20
             });
+            var elems = document.querySelectorAll('.tooltipped');
+            var instances = M.Tooltip.init(elems);
+            var bottom = document.getElementById("bottom");
+            bottom.scrollTop = bottom.scrollHeight;
         }
 
         $scope.initChat = function () {

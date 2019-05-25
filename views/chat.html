@@ -7,38 +7,27 @@
                 <a ng-repeat="contact in contacts"
                     class="group col s4 btn btn-large waves-effect waves-light red lighten-2 white-text"
                     ng-click="changeContact(contact.Username)">
-                    <img src="../images/{{contact.Pic}}" alt="" class="circle responsive-img">
+                    <img src="../images/{{contact.Pic}}" alt="" class="avatar">
                 </a>
             </div>
         </div>
         <div class="col s8 offset-s2">
             <h3 style="color: rgba(238, 110, 115, 0.7);" class="flow-text">{{currentContact}}</h3>
         </div>
-        <div class="col s8 offset-s2" style="max-height: 325px; height: auto;overflow: auto">
+        <div id = "bottom" class="col s8 offset-s2" style="max-height: 300px; height: auto;overflow-y: scroll">
             <div class="card" ng-repeat="message in currentMessages">
-                <div class="card-content">
-                    <p>{{ message.sender_uuid }}</p>
-                    <p>{{ message.content }}</p>
-                </div>
+                <div class="card-content"
+                    style="background-color:{{message.sender_uuid != user ? 'white' : 'rgba(238, 110, 115, 0.7)'}};color:{{message.sender_uuid != user ?  'rgba(238, 110, 115, 0.7)':'white'}}; text-align:{{message.sender_uuid != user ? 'left' : 'right'}}">
+                    <div class="tooltipped" data-position="top" data-tooltip="{{ message.date | date:"MM/dd/yyyy 'at' h:mma"}">
+                        <p>{{ message.content }}</p>
+                    </div>
+                </div>     
             </div>
-            <!-- <li ng-repeat="message in messages[channel]"> -->
-            <!-- 
-            <ul>
-                <li ng-repeat="message in currentMessages">
-                    <span class="title">{{ message.sender_uuid }}</span>
-                    <p class="tooltipped" data-position="bottom"
-                        data-tooltip="{{ message.date | date:"MM/dd/yyyy 'at' h:mma"}}">
-                        {{ message.content }}</p><br>
-                </li>
-            </ul> -->
         </div>
-        <div class="col s8 offset-s2">
-            <input class = "group col s10" ng-model="messageContent" type="text" placeholder="Type your message" />
-            <a class="btn waves-effect waves-light red lighten-2 white-text group col s2" ng-click="sendMessage()"><i class="material-icons"
-                name="upload">send</i></a>
+        <div class=" col s8 offset-s2">
+            <input class="group col s10" ng-model="messageContent" type="text" placeholder="Type your message" />
+            <a class="btn waves-effect waves-light red lighten-2 white-text group col s2" ng-click="sendMessage()"><i class="material-icons" name="upload">send</i></a>
         </div>
     </div>
 </div>
-<script src="../js/tooltip.js"></script>
-
 </html>

@@ -13,12 +13,22 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
             if (!$scope.messageContent || $scope.messageContent === '') {
                 return;
             }
+            "MM/dd/yyyy 'at' h:mma"
+            var date = new Date();
+            var month = date.getMonth();
+            var day = date.getDate();
+            var year = date.getFullYear();
+            var hour = date.getHours() - (date.getHours() >= 12 ? 12 : 0);
+            var period = date.getHours() >= 12 ? 'PM' : 'AM';
+            var minute = date.getMinutes();
+            var sendDate = month + "/" + day + "/" + year + " at " + hour + ":" + minute + period;
+            console.log(sendDate);
             Pubnub.publish({
                 channel: $scope.channel,
                 message: {
                     content: $scope.messageContent,
                     sender_uuid: $scope.user,
-                    date: new Date()
+                    date: sendDate
                 },
                 callback: function (m) {
 
@@ -36,7 +46,7 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
             }
             Pubnub.subscribe({
                 channel: $scope.channel,
-                message: function(m){
+                message: function (m) {
                     $scope.$apply(function () {
                         $scope.currentMessages.push(m);
                     });

@@ -9,7 +9,8 @@ angular.module('myApp', [
     'myApp.swipe',
     'myApp.upload',
     'myApp.verify',
-    'myApp.info'
+    'myApp.info',
+    'pubnub.angular.service'
 ])
     .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
         $locationProvider.hashPrefix('!');

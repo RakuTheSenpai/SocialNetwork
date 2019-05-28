@@ -13,7 +13,6 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
             if (!$scope.messageContent || $scope.messageContent === '') {
                 return;
             }
-            "MM/dd/yyyy 'at' h:mma"
             var date = new Date();
             var month = date.getMonth();
             var day = date.getDate();

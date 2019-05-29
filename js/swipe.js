@@ -19,6 +19,12 @@ angular.module('myApp.swipe', ['ngRoute'])
 
         var authToken;
         var index = 0;
+        var bio;
+        var age;
+        var tags;
+        var pic;
+        var viewed;
+        var username;
         window.authToken.then(function setAuthToken(token) {
             if (token) {
                 authToken = token;
@@ -34,7 +40,14 @@ angular.module('myApp.swipe', ['ngRoute'])
                 };
                 $http(req).then(function successCallback(response) {
                     if (response.data.Items.length > 0) {
-                        user = response.data.Items[0].Username;
+                        user = response.data.Items[0];
+                        username = user.Username;
+                        viewed = user.MemesViewed;
+                        age = user.Age;
+                        tags = user.Tags;
+                        bio = user.Bio;
+                        pic = user.Pic;
+
                         var req2 = {
                             method: 'POST',
                             url: _config.api.invokeUrl + '/getmemes',
@@ -72,5 +85,25 @@ angular.module('myApp.swipe', ['ngRoute'])
             if (index < $scope.memes.length) {
                 $scope.currentimage = $scope.memes[index].Filename;
             }
+            viewed += 1;
+            var req = {
+                method: 'POST',
+                url: _config.api.invokeUrl + '/updateusuariomema',
+                headers: {
+                    Authorization: authToken
+                },
+                data: {
+                    Age: age,
+                    Bio: bio,
+                    MemesViewed: viewed,
+                    Username: username,
+                    Tags: tags,
+                    Pic: pic,
+                }
+            };
+            $http(req).then(function successCallback(response) {
+            }, function errorCallback(response) {
+                console.error(response);
+            });
         }
     }]);;

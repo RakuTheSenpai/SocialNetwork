@@ -21,7 +21,6 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
             var period = date.getHours() >= 12 ? 'PM' : 'AM';
             var minute = date.getMinutes();
             var sendDate = month + "/" + day + "/" + year + " at " + hour + ":" + minute + period;
-            console.log(sendDate);
             Pubnub.publish({
                 channel: $scope.channel,
                 message: {

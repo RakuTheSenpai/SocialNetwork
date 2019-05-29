@@ -8,6 +8,7 @@ angular.module('myApp.upload', ['ngRoute'])
         });
     }])
     .controller('UploadCtrl', ['$scope', '$http', function ($scope, $http) {
+        $scope.up = true;
         var user = "";
         var file = "";
         var filename = "";
@@ -83,6 +84,7 @@ angular.module('myApp.upload', ['ngRoute'])
             $scope.file_up = true;
         });
         $scope.upload = function () {
+            $scope.up = false;
             //DynamoDB and S3
             var timestamp = Math.floor(Date.now() / 1000);
             var req2 = {
@@ -105,7 +107,7 @@ angular.module('myApp.upload', ['ngRoute'])
                     type: 'success',
                     confirmButtonColor: '#f08080'
                 });
-                window.location.href = '#!/swipe';
+                $scope.up = true;
             }, function errorCallback(response) {
                 console.error(response);
             });

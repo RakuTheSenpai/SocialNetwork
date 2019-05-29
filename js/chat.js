@@ -100,6 +100,10 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                             },
                             data: {}
                         };
+                        var viewed = response.data.Items[0].MemesViewed;
+                        if(viewed<10){
+                            window.location.href = "#!/swipe";
+                        }
                         $http(req).then(function successCallback(response) {
                             response.data.Items.forEach(element => {
                                 var chan = $scope.user + "|" + element.Datos.Username;

@@ -36,6 +36,10 @@ angular.module('myApp.upload', ['ngRoute'])
                 $http(req).then(function successCallback(response) {
                     if (response.data.Items.length > 0) {
                         user = response.data.Items[0].Username;
+                        var viewed = response.data.Items[0].MemesViewed;
+                        if(viewed<10){
+                            window.location.href = "#!/swipe";
+                        }
                     }
                     else {
                         window.location.href = "#!/info";

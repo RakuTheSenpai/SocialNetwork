@@ -55,6 +55,7 @@ angular.module('myApp.upload', ['ngRoute'])
             Swal.fire(error);
             window.location.href = '#!/login';
         });
+    
         FilePond.registerPlugin(
             FilePondPluginFileEncode,
             FilePondPluginFileValidateType,
@@ -117,5 +118,11 @@ angular.module('myApp.upload', ['ngRoute'])
             });
 
         }
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+        
+        
     }]);
-
+ 
+      

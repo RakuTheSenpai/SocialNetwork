@@ -100,7 +100,13 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                             data: {}
                         };
                         var viewed = response.data.Items[0].MemesViewed;
-                        if(viewed<10){
+                        if (viewed < 10) {
+                            Swal.fire({
+                                title: 'Wait Up!',
+                                text: 'You need to like/dislike 10 Memes first for our algorithm.',
+                                type: 'success',
+                                confirmButtonColor: '#f08080'
+                            });
                             window.location.href = "#!/swipe";
                         }
                         $http(req).then(function successCallback(response) {

@@ -8,10 +8,18 @@ angular.module('myApp.upload', ['ngRoute'])
         });
     }])
     .controller('UploadCtrl', ['$scope', '$http', function ($scope, $http) {
-        $scope.up = false;
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+        $scope.up = true;
         var user = "";
         var file = "";
         var filename = "";
+        var bio;
+        var age;
+        var tags;
+        var pic;
+        var viewed;
+        var username;
         var poolData = {
             UserPoolId: _config.cognito.userPoolId,
             ClientId: _config.cognito.userPoolClientId
@@ -35,9 +43,21 @@ angular.module('myApp.upload', ['ngRoute'])
                 };
                 $http(req).then(function successCallback(response) {
                     if (response.data.Items.length > 0) {
-                        user = response.data.Items[0].Username;
+                        user = response.data.Items[0];
+                        username = user.Username;
+                        viewed = user.MemesViewed;
+                        age = user.Age;
+                        tags = user.Tags;
+                        bio = user.Bio;
+                        pic = user.Pic;
                         var viewed = response.data.Items[0].MemesViewed;
-                        if(viewed<10){
+                        if (viewed < 10) {
+                            Swal.fire({
+                                title: 'Wait Up!',
+                                text: 'You need to like/dislike 10 Memes first for our algorithm.',
+                                type: 'success',
+                                confirmButtonColor: '#f08080'
+                            });
                             window.location.href = "#!/swipe";
                         }
                     }
@@ -55,7 +75,6 @@ angular.module('myApp.upload', ['ngRoute'])
             Swal.fire(error);
             window.location.href = '#!/login';
         });
-    
         FilePond.registerPlugin(
             FilePondPluginFileEncode,
             FilePondPluginFileValidateType,
@@ -80,16 +99,91 @@ angular.module('myApp.upload', ['ngRoute'])
         pond.addEventListener('FilePond:addfile', e => {
             file = e.detail.file.getFileEncodeBase64String();
             filename = e.detail.file.filename;
-            $scope.file_up = false;
+            $scope.up = false;
+            $scope.$apply();
         });
         pond.addEventListener('FilePond:removefile', e => {
-            $scope.file_up = true;
+            $scope.up = true;
+            $scope.$apply();
         });
         pond.addEventListener('FilePond:error', e => {
-            $scope.file_up = true;
+            $scope.up = true;
+            $scope.$apply();
         });
         $scope.upload = function () {
             $scope.up = true;
+            var tagged = [];
+            var tag1 = document.getElementById("tag1").value;
+            var tag2 = document.getElementById("tag2").value;
+            var tag3 = document.getElementById("tag3").value;
+            tag1 = (tag1 != '') ? tag1 : "NoTag";
+            tag2 = (tag2 != '') ? tag2 : "NoTag";
+            tag3 = (tag3 != '') ? tag3 : "NoTag";
+            tagged.push(tag1, tag2, tag3);
+            tagged.forEach(tag => {
+                switch (tag) {
+                    case "edgy":
+                        tags.edgymemes += 1;
+                        break;
+                    case "spicy":
+                        tags.spicymemes += 1;
+                        break;
+                    case "dank":
+                        tags.dankmemes += 1;
+                        break;
+                    case "goofy":
+                        tags.goofymemes += 1;
+                        break;
+                    case "wholesome":
+                        tags.wholesomeme += 1;
+                        break;
+                    case "mx":
+                        tags.mxmemes += 1;
+                        break;
+                    case "pepe":
+                        tags.pepememe += 1;
+                        break;
+                    case "mcu":
+                        tags.mcumeme += 1;
+                        break;
+                    case "computer":
+                        tags.computermemes += 1;
+                        break;
+                    case "offensive":
+                        tags.offensivememes += 1;
+                        break;
+                    case "cringy":
+                        tags.cringy += 1;
+                        break;
+                    case "weird":
+                        tags.weirdmemes += 1;
+                        break;
+                    case "russian":
+                        tags.russianmemes += 1;
+                        break;
+                    case "kpop":
+                        tags.kpopmemes += 1;
+                        break;
+                    case "4chan":
+                        tags.chan += 1;
+                        break;
+                    case "cancer":
+                        tags.cancermemes += 1;
+                        break;
+                    case "shitpost":
+                        tags.shitpost += 1;
+                        break;
+                    case "vwave":
+                        tags.vwavememes += 1;
+                        break;
+                    case "kpop":
+                        tags.kpopmemes += 1;
+                        break;
+                    case "minecraf":
+                        tags.minecraft += 1;
+                        break;
+                }
+            });
             //DynamoDB and S3
             var timestamp = Math.floor(Date.now() / 1000);
             var req2 = {
@@ -98,11 +192,13 @@ angular.module('myApp.upload', ['ngRoute'])
                 headers: {
                     Authorization: authToken
                 },
+
                 data: {
-                    Usuario: user,
+                    Usuario: username,
                     Timestamp: timestamp,
                     Filename: filename,
                     File: file,
+                    Tags: tagged
                 }
             };
             $http(req2).then(function successCallback(response) {
@@ -116,13 +212,6 @@ angular.module('myApp.upload', ['ngRoute'])
             }, function errorCallback(response) {
                 console.error(response);
             });
-
         }
-  $(document).ready(function(){
-    $('select').formSelect();
-  });
-        
-        
     }]);
- 
-      
+

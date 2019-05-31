@@ -18,6 +18,42 @@ angular.module('myApp.login', ['ngRoute'])
         window.authToken.then(function setAuthToken(token) {
             if (token) {
                 window.location.href = '#!/swipe';
+                var req = {
+                    method: 'POST',
+                    url: _config.api.invokeUrl + '/getusuariomema',
+                    headers: {
+                        Authorization: authToken
+                    },
+                    data: {
+
+                    }
+                };
+                $http(req).then(function successCallback(response) {
+                    if (response.data.Items.length > 0) {
+                        var req2 = {
+                            method: 'POST',
+                            url: _config.api.invokeUrl + '/getpending',
+                            headers: {
+                                Authorization: authToken
+                            },
+                            data: {
+
+                            }
+                        };
+                        $http(req2).then(function successCallback(response) {
+                            $scope.memes = response.data.Items;
+                            $scope.currentimage = $scope.memes[0].Filename;
+                        }, function errorCallback(response) {
+                            console.error(response);
+                        });
+                    }
+                    else {
+                        window.location.href = "#!/info";
+                    }
+
+                }, function errorCallback(response) {
+                    console.error(response);
+                });
             }
         }).catch(function handleTokenError(error) {
             Swal.fire({

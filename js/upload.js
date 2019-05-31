@@ -98,7 +98,7 @@ angular.module('myApp.upload', ['ngRoute'])
         const pond = document.querySelector('.filepond--root');
         pond.addEventListener('FilePond:addfile', e => {
             file = e.detail.file.getFileEncodeBase64String();
-            filename = e.detail.file.filename;
+            filename = e.detail.file.filename.split('.').slice(0, -1).join('.');
             $scope.up = false;
             $scope.$apply();
         });
@@ -120,98 +120,35 @@ angular.module('myApp.upload', ['ngRoute'])
             tag2 = (tag2 != '') ? tag2 : "NoTag";
             tag3 = (tag3 != '') ? tag3 : "NoTag";
             tagged.push(tag1, tag2, tag3);
-            tagged.forEach(tag => {
-                switch (tag) {
-                    case "edgy":
-                        tags.edgymemes += 1;
-                        break;
-                    case "spicy":
-                        tags.spicymemes += 1;
-                        break;
-                    case "dank":
-                        tags.dankmemes += 1;
-                        break;
-                    case "goofy":
-                        tags.goofymemes += 1;
-                        break;
-                    case "wholesome":
-                        tags.wholesomeme += 1;
-                        break;
-                    case "mx":
-                        tags.mxmemes += 1;
-                        break;
-                    case "pepe":
-                        tags.pepememe += 1;
-                        break;
-                    case "mcu":
-                        tags.mcumeme += 1;
-                        break;
-                    case "computer":
-                        tags.computermemes += 1;
-                        break;
-                    case "offensive":
-                        tags.offensivememes += 1;
-                        break;
-                    case "cringy":
-                        tags.cringy += 1;
-                        break;
-                    case "weird":
-                        tags.weirdmemes += 1;
-                        break;
-                    case "russian":
-                        tags.russianmemes += 1;
-                        break;
-                    case "kpop":
-                        tags.kpopmemes += 1;
-                        break;
-                    case "4chan":
-                        tags.chan += 1;
-                        break;
-                    case "cancer":
-                        tags.cancermemes += 1;
-                        break;
-                    case "shitpost":
-                        tags.shitpost += 1;
-                        break;
-                    case "vwave":
-                        tags.vwavememes += 1;
-                        break;
-                    case "kpop":
-                        tags.kpopmemes += 1;
-                        break;
-                    case "minecraf":
-                        tags.minecraft += 1;
-                        break;
-                }
-            });
             //DynamoDB and S3
             var timestamp = Math.floor(Date.now() / 1000);
-            var req2 = {
-                method: 'POST',
-                url: _config.api.invokeUrl + '/putmeme',
-                headers: {
-                    Authorization: authToken
-                },
+            console.log(file);
+            // var req2 = {
+            //     method: 'POST',
+            //     url: _config.api.invokeUrl + '/putmeme',
+            //     headers: {
+            //         Authorization: authToken
+            //     },
 
-                data: {
-                    Usuario: username,
-                    Timestamp: timestamp,
-                    Filename: filename,
-                    File: file,
-                    Tags: tagged
-                }
-            };
-            $http(req2).then(function successCallback(response) {
-                Swal.fire({
-                    title: 'Image Uploaded!',
-                    text: 'Nice job, Gamer.',
-                    type: 'success',
-                    confirmButtonColor: '#f08080'
-                });
-                $scope.up = false;
-            }, function errorCallback(response) {
-                console.error(response);
-            });
+            //     data: {
+            //         Usuario: username,
+            //         Timestamp: timestamp,
+            //         Filename: filename,
+            //         File: file,
+            //         Tags: tagged
+            //     }
+            // };
+            // $http(req2).then(function successCallback(response) {
+            //     Swal.fire({
+            //         title: 'Image Uploaded!',
+            //         text: 'Nice job, Gamer.',
+            //         type: 'success',
+            //         confirmButtonColor: '#f08080'
+            //     });
+            //     $scope.up = false;
+            // }, function errorCallback(response) {
+            //     console.error(response);
+            // });
         }
     }]);
 

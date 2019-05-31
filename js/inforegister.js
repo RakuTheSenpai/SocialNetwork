@@ -55,7 +55,7 @@ angular.module('myApp.info', ['ngRoute'])
                     type: 'success',
                     confirmButtonColor: '#f08080'
                 });
-                //window.location.href = '#!/swipe';
+                window.location.href = '#!/swipe';
             }, function errorCallback(response) {
                 console.error(response);
             });

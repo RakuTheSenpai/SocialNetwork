@@ -113,7 +113,7 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                             response.data.Items.forEach(element => {
                                 var chan = $scope.user + "|" + element.Datos.Username;
                                 $scope.contacts.push(element.Datos);
-                            });
+                                });
                             $scope.initChat();
                         }, function errorCallback(response) {
                             console.error(response);

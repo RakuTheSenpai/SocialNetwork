@@ -21,7 +21,6 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
             var period = date.getHours() >= 12 ? 'PM' : 'AM';
             var minute = date.getMinutes();
             var sendDate = month + "/" + day + "/" + year + " at " + hour + ":" + minute + period;
-            console.log(sendDate);
             Pubnub.publish({
                 channel: $scope.channel,
                 message: {
@@ -100,11 +99,21 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                             },
                             data: {}
                         };
+                        var viewed = response.data.Items[0].MemesViewed;
+                        if (viewed < 10) {
+                            Swal.fire({
+                                title: 'Wait Up!',
+                                text: 'You need to like/dislike 10 Memes first for our algorithm.',
+                                type: 'success',
+                                confirmButtonColor: '#f08080'
+                            });
+                            window.location.href = "#!/swipe";
+                        }
                         $http(req).then(function successCallback(response) {
                             response.data.Items.forEach(element => {
                                 var chan = $scope.user + "|" + element.Datos.Username;
                                 $scope.contacts.push(element.Datos);
-                            });
+                                });
                             $scope.initChat();
                         }, function errorCallback(response) {
                             console.error(response);

@@ -8,6 +8,7 @@ angular.module('myApp.swipe', ['ngRoute'])
         });
     }])
     .controller('SwipeCtrl', ['$scope', '$http', function ($scope, $http) {
+        $scope.done = false;
         var user = "";
         var poolData = {
             UserPoolId: _config.cognito.userPoolId,
@@ -59,7 +60,7 @@ angular.module('myApp.swipe', ['ngRoute'])
                             }
                         };
                         $http(req2).then(function successCallback(response) {
-                            $scope.memes = response.data.Items;
+                            $scope.memes = shuffle(response.data.Items);
                             $scope.currentimage = $scope.memes[0].Filename;
                         }, function errorCallback(response) {
                             console.error(response);
@@ -79,7 +80,24 @@ angular.module('myApp.swipe', ['ngRoute'])
             Swal.fire(error);
             window.location.href = '#!/login';
         });
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
 
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
         $scope.next = function (opinion) {
             var change = (opinion == 'like') ? 1 : -1;
             $scope.memes[index].Tags.forEach(tag => {
@@ -147,6 +165,16 @@ angular.module('myApp.swipe', ['ngRoute'])
                 }
             });
             index++;
+            if (index == $scope.memes.length) {
+                $scope.done = true;
+                Swal.fire({
+                    type: 'error',
+                    title: 'You are done!',
+                    text: 'You\'ve reached the end of the queue!',
+                    confirmButtonColor: '#f08080'
+                });
+                return;
+            }
             if (index < $scope.memes.length) {
                 $scope.currentimage = $scope.memes[index].Filename;
             }

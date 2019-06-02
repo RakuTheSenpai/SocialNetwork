@@ -60,10 +60,4 @@ angular.module('myApp', [
                 resolve(null);
             }
         });
-        $scope.signOut = function () {
-            if (userPool.getCurrentUser() != null) {
-                userPool.getCurrentUser().signOut();
-                window.location.reload("#!/login");
-            }
-        }
     }]);

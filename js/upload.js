@@ -122,33 +122,32 @@ angular.module('myApp.upload', ['ngRoute'])
             tagged.push(tag1, tag2, tag3);
             //DynamoDB and S3
             var timestamp = Math.floor(Date.now() / 1000);
-            console.log(file);
-            // var req2 = {
-            //     method: 'POST',
-            //     url: _config.api.invokeUrl + '/putmeme',
-            //     headers: {
-            //         Authorization: authToken
-            //     },
+            var req2 = {
+                method: 'POST',
+                url: _config.api.invokeUrl + '/putmeme',
+                headers: {
+                    Authorization: authToken
+                },
 
-            //     data: {
-            //         Usuario: username,
-            //         Timestamp: timestamp,
-            //         Filename: filename,
-            //         File: file,
-            //         Tags: tagged
-            //     }
-            // };
-            // $http(req2).then(function successCallback(response) {
-            //     Swal.fire({
-            //         title: 'Image Uploaded!',
-            //         text: 'Nice job, Gamer.',
-            //         type: 'success',
-            //         confirmButtonColor: '#f08080'
-            //     });
-            //     $scope.up = false;
-            // }, function errorCallback(response) {
-            //     console.error(response);
-            // });
+                data: {
+                    Usuario: username,
+                    Timestamp: timestamp,
+                    Filename: filename,
+                    File: file,
+                    Tags: tagged
+                }
+            };
+            $http(req2).then(function successCallback(response) {
+                Swal.fire({
+                    title: 'Image Uploaded!',
+                    text: 'Nice job, Gamer.',
+                    type: 'success',
+                    confirmButtonColor: '#f08080'
+                });
+                $scope.up = false;
+            }, function errorCallback(response) {
+                console.error(response);
+            });
         }
     }]);
 

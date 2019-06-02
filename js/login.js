@@ -7,7 +7,7 @@ angular.module('myApp.login', ['ngRoute'])
             templateUrl: 'views/login.html',
         });
     }])
-    .controller('LoginCtrl', ['$scope', function ($scope) {
+    .controller('LoginCtrl', ['$scope', '$http', function ($scope, $http) {
         var poolData = {
             UserPoolId: _config.cognito.userPoolId,
             ClientId: _config.cognito.userPoolClientId
@@ -17,7 +17,56 @@ angular.module('myApp.login', ['ngRoute'])
         var authToken;
         window.authToken.then(function setAuthToken(token) {
             if (token) {
+                authToken = token;
                 window.location.href = '#!/swipe';
+                var req = {
+                    method: 'POST',
+                    url: _config.api.invokeUrl + '/getusuariomema',
+                    headers: {
+                        Authorization: authToken
+                    },
+                    data: {
+
+                    }
+                };
+                $http(req).then(function successCallback(response) {
+                    if (response.data.Items.length > 0) {
+                        var req2 = {
+                            method: 'POST',
+                            url: _config.api.invokeUrl + '/getpending',
+                            headers: {
+                                Authorization: authToken
+                            },
+                            data: {
+
+                            }
+                        };
+                        $http(req2).then(function successCallback(response) {
+                            var count = response.data.Count;
+                            if (count > 0) {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'Good News!',
+                                    text: "You have " + count + " new matches!",
+                                    confirmButtonColor: '#f08080',
+                                    confirmButtonText: 'Chat with them!'
+                                }).then((result) => {
+                                    if (result.value) {
+                                        window.location.href = "#!/chat";
+                                    }
+                                })
+                            }
+                        }, function errorCallback(response) {
+                            console.error(response);
+                        });
+                    }
+                    else {
+                        window.location.href = "#!/info";
+                    }
+
+                }, function errorCallback(response) {
+                    console.error(response);
+                });
             }
         }).catch(function handleTokenError(error) {
             Swal.fire({

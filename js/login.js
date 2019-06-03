@@ -15,6 +15,8 @@ angular.module('myApp.login', ['ngRoute'])
         var userPool;
         userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
         var authToken;
+        var matches;
+        var forDeletion = [];
         window.authToken.then(function setAuthToken(token) {
             if (token) {
                 authToken = token;
@@ -44,17 +46,44 @@ angular.module('myApp.login', ['ngRoute'])
                         $http(req2).then(function successCallback(response) {
                             var count = response.data.Count;
                             if (count > 0) {
-                                Swal.fire({
-                                    type: 'success',
-                                    title: 'Good News!',
-                                    text: "You have " + count + " new matches!",
-                                    confirmButtonColor: '#f08080',
-                                    confirmButtonText: 'Chat with them!'
-                                }).then((result) => {
-                                    if (result.value) {
-                                        window.location.href = "#!/chat";
+                                matches = response.data.Items;
+                                var pendingMatches = [];
+                                matches.forEach(match => {
+                                    var param = {
+                                        DeleteRequest: {
+                                            Key: {
+                                                Usuario: match.Usuario,
+                                                Match: match.Match,
+                                            }
+                                        }
+                                    };
+                                    pendingMatches.push(param);
+                                });
+                                var req3 = {
+                                    method: 'POST',
+                                    url: _config.api.invokeUrl + '/deletepending',
+                                    headers: {
+                                        Authorization: authToken
+                                    },
+                                    data: {
+                                        Matches: pendingMatches,
                                     }
-                                })
+                                };
+                                $http(req3).then(function successCallback(response) {
+                                    Swal.fire({
+                                        type: 'success',
+                                        title: 'Good News!',
+                                        text: "You have " + count + " new matches!",
+                                        confirmButtonColor: '#f08080',
+                                        confirmButtonText: 'Chat with them!'
+                                    }).then((result) => {
+                                        if (result.value) {
+                                            window.location.href = "#!/chat";
+                                        }
+                                    })
+                                }, function errorCallback(response) {
+                                    console.error(response);
+                                });
                             }
                         }, function errorCallback(response) {
                             console.error(response);

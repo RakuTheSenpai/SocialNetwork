@@ -7,6 +7,8 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
     }])
     .controller('ChatCtrl', ['$scope', '$http', 'Pubnub', function ($scope, $http, Pubnub) {
         $scope.currentContact = "";
+        $scope.userEmail = "";
+        $scope.matchEmail = "";
 
         $scope.sendMessage = function () {
             // Don't send an empty message 
@@ -35,8 +37,9 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
             $scope.messageContent = '';
         }
 
-        $scope.changeContact = function (contact) {
+        $scope.changeContact = function (contact, match) {
             $scope.currentContact = contact;
+            $scope.matchEmail = match;
             if ($scope.user > contact) {
                 $scope.channel = $scope.user + "|" + contact;
             } else {
@@ -68,7 +71,7 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                 subscribe_key: 'sub-c-157f2f30-7c0e-11e9-a950-f249fab64e16',
                 uuid: $scope.user
             });
-            $scope.changeContact($scope.contacts[0].Username);
+            $scope.changeContact($scope.contacts[0].Username.S, $scope.contacts[0].Email.S);
         }
 
         $scope.channel = "";
@@ -91,6 +94,7 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                 $http(req).then(function successCallback(response) {
                     if (response.data.Items.length > 0) {
                         $scope.user = response.data.Items[0].Username;
+                        $scope.userEmail = response.data.Items[0].Email;
                         req = {
                             method: 'POST',
                             url: _config.api.invokeUrl + '/getmatches',
@@ -110,10 +114,19 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                             window.location.href = "#!/swipe";
                         }
                         $http(req).then(function successCallback(response) {
+                            if (response.data.Count == 0) {
+                                Swal.fire({
+                                    title: 'Wait Up!',
+                                    text: 'You don\'t have any matches just yet',
+                                    type: 'success',
+                                    confirmButtonColor: '#f08080'
+                                });
+                                window.location.href = "#!/swipe";
+                            }
                             response.data.Items.forEach(element => {
                                 var chan = $scope.user + "|" + element.Datos.Username;
                                 $scope.contacts.push(element.Datos);
-                                });
+                            });
                             $scope.initChat();
                         }, function errorCallback(response) {
                             console.error(response);
@@ -134,6 +147,46 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
             Swal.fire(error);
             window.location.href = '#!/login';
         });
+
+        $scope.unMatch = function (user, match) {
+            var req = {
+                method: 'POST',
+                url: _config.api.invokeUrl + '/unmatch',
+                headers: {
+                    Authorization: authToken
+                },
+                data: {
+                    Usuario: user,
+                    Match: match
+                }
+            };
+            $http(req).then(function successCallback(response) {
+                req = {
+                    method: 'POST',
+                    url: _config.api.invokeUrl + '/unmatch',
+                    headers: {
+                        Authorization: authToken
+                    },
+                    data: {
+                        Usuario: match,
+                        Match: user
+                    }
+                };
+                $http(req).then(function successCallback(response) {
+                    Swal.fire({
+                        title: 'He/She gone.',
+                        text: 'User has been unmatched!',
+                        type: 'success',
+                        confirmButtonColor: '#f08080'
+                    });
+                    window.location.reload('#!/chat');
+                }, function errorCallback(response) {
+                    console.error(response);
+                });
+            }, function errorCallback(response) {
+                console.error(response);
+            });
+        }
 
     }]).directive('myRepeatDirective', function () {
         return function (scope, element, attrs) {

@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <html>
 <div ng-controller='ProfileCtrl'>
-    <div class="row"></div>
     <div class="row">
-        <div class="col s8 offset-s2">
-
+        <div class="col s12 center">
+            <img src="../images/{{user.Pic}}" alt="" class="avatar-big" style="display: inline-block" ng-hide="!edit">
+            <div class="col s4 offset-s4" ng-hide="edit">
+                <input id="meme" type="file" class="filepond" name="filepond" accept="image/png, image/jpeg, image/gif">
+            </div>
+            <div class="group col s12">
+                <h5 style="color: rgba(238, 110, 115, 0.7);display: inline-block">{{user.Username}}</h5>
+                <a class='waves-effect waves-red' ng-click="change()"><i class="material-icons"
+                        style="color: rgba(238, 110, 115, 0.7);display: inline-block">{{settings}}</i></a>
+            </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col s8 offset-s2">
+            Email<input ng-model="user.Email" ng-readonly="true">
+            Age<input ng-model="user.Age" ng-readonly="edit">
+            Bio<input ng-model="user.Bio" ng-readonly="edit">
+            <div class="center">
+                <a class='btn waves-effect waves-light red lighten-2 white-text' ng-click="signOut();">Log Out</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 </html>

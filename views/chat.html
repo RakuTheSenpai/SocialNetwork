@@ -13,25 +13,26 @@
             <br>
             <div class="divider"></div>
             <a class="waves-effect waves-effect waves-red"
-                style="color: rgba(238, 110, 115, 0.7);display: inline-block;"
+                style="color: rgb(88, 148, 145);display: inline-block;"
                 ng-click="unMatch(userEmail,matchEmail);"><i class="material-icons">delete</i></a>
-            <h5 style="color: rgba(238, 110, 115, 0.7);display: inline-block;">{{currentContact}}
+            <h5 style="color: rgb(68,45,148);display: inline-block;">{{currentContact}}
             </h5>
             <br>
         </div>
         <div id="bottom" class="col s8 offset-s2" style="height: auto;max-height: 300px;overflow-y: scroll;">
             <div class="card" ng-repeat="message in currentMessages" my-repeat-directive>
                 <div class="card-content"
-                    style="background-color:{{message.sender_uuid != user ? 'white' : 'rgba(238, 110, 115, 0.7)'}};color:{{message.sender_uuid != user ?  'rgba(238, 110, 115, 0.7)':'white'}}; text-align:{{message.sender_uuid != user ? 'left' : 'right'}}">
+                    style="background-color:{{message.sender_uuid != user ? 'white' : 'rgba(208,51,79,0.6)'}};color:{{message.sender_uuid != user ?  'rgba(208,51,79,0.6)':'white'}}; text-align:{{message.sender_uuid != user ? 'left' : 'right'}}">
                     <div class="tooltipped" data-position="top" data-tooltip="{{ message.date}}">
                         <p>{{ message.content }}</p>
                     </div>
                 </div>
             </div>
         </div>
+        <br><br>
         <div class=" col s8 offset-s2">
             <input class="group col s10" ng-model="messageContent" type="text" placeholder="Type your message" />
-            <a class="btn waves-effect waves-light red lighten-2 white-text group col s2" ng-click="sendMessage()"><i
+            <a class="btn waves-effect waves-light white-text group col s2" ng-click="sendMessage()"><i
                     class="material-icons" name="upload">send</i></a>
         </div>
     </div>

@@ -8,7 +8,7 @@
                 <input type="text" placeholder="Username" name="email" ng-model="username" required>
                 <input type="number" placeholder="Age" name="age" ng-model="age" required pattern="^[0-9]*$">
                 <div style="text-align: center">
-                    <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="confirm()"
+                    <a class="btn waves-effect waves-light white-text" ng-click="confirm()"
                         ng-disabled="registerForm.age.$dirty && registerForm.age.$invalid || registerForm.user.$dirty && registerForm.user.$invalid
                         || registerForm.$invalid">Confirm</a> </div>
             </form>

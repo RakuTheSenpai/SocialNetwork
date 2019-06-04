@@ -8,7 +8,7 @@
                 <input name="email" type="email" placeholder="Email" ng-model="email" required>
                 <input name="pswd" type="password" placeholder="Password" ng-model="pswd" required>
                 <div style="text-align: center">
-                    <a class="btn waves-effect waves-light red lighten-2 white-text" ng-click="handleSignin()"
+                    <a class="btn waves-effect waves-light white-text" ng-click="handleSignin()"
                         ng-disabled="signInForm.email.$dirty && signInForm.email.$invalid || signInForm.pswd.$dirty && signInForm.pswd.$invalid || signInForm.$invalid">Log
                         in</a>
                 </div>

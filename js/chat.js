@@ -177,9 +177,12 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                         title: 'He/She gone.',
                         text: 'User has been unmatched!',
                         type: 'success',
-                        confirmButtonColor: '#f08080'
+                        confirmButtonColor: '#f08080',
+                        timer: 800,
+                        onClose: () => {
+                            window.location.reload("#!/chat");
+                        }
                     });
-                    window.location.reload('#!/chat');
                 }, function errorCallback(response) {
                     console.error(response);
                 });

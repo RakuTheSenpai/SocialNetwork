@@ -71,7 +71,6 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                 subscribe_key: 'sub-c-157f2f30-7c0e-11e9-a950-f249fab64e16',
                 uuid: $scope.user
             });
-            console.log($scope.contacts);
             $scope.changeContact($scope.contacts[0].Username, $scope.contacts[0].Email);
         }
 
@@ -178,9 +177,12 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                         title: 'He/She gone.',
                         text: 'User has been unmatched!',
                         type: 'success',
-                        confirmButtonColor: '#f08080'
+                        confirmButtonColor: '#f08080',
+                        timer: 800,
+                        onClose: () => {
+                            window.location.reload("#!/chat");
+                        }
                     });
-                    window.location.reload('#!/chat');
                 }, function errorCallback(response) {
                     console.error(response);
                 });

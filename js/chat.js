@@ -71,7 +71,7 @@ angular.module('myApp.chat', ['ngRoute', "pubnub.angular.service"])
                 subscribe_key: 'sub-c-157f2f30-7c0e-11e9-a950-f249fab64e16',
                 uuid: $scope.user
             });
-            $scope.changeContact($scope.contacts[0].Username.S, $scope.contacts[0].Email.S);
+            $scope.changeContact($scope.contacts[0].Username, $scope.contacts[0].Email);
         }
 
         $scope.channel = "";

@@ -142,7 +142,11 @@ angular.module('myApp.upload', ['ngRoute'])
                     title: 'Image Uploaded!',
                     text: 'Nice job, Gamer.',
                     type: 'success',
-                    confirmButtonColor: '#f08080'
+                    confirmButtonColor: '#f08080',
+                    timer: 800,
+                    onClose: () => {
+                        window.location.reload("#!/upload");
+                    }
                 });
                 $scope.up = false;
             }, function errorCallback(response) {

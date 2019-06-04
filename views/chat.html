@@ -4,8 +4,8 @@
     <div class="row">
         <div class="col s8 offset-s2" style="width:4000; overflow: auto;white-space: nowrap;">
             <a ng-repeat="contact in contacts" class="btn-floating btn-large waves-effect waves-light red"
-                ng-click="changeContact(contact.Username.S, contact.Email.S)" style="display: inline-block">
-                <img src="../images/{{contact.Pic.S}}" alt="" class="avatar" style="display: inline-block">
+                ng-click="changeContact(contact.Username, contact.Email)" style="display: inline-block">
+                <img src="../images/{{contact.Pic}}" alt="" class="avatar" style="display: inline-block">
             </a>
         </div>
 

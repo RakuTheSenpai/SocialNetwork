@@ -3,7 +3,7 @@
 <div ng-controller="ChatCtrl">
     <div class="row">
         <div class="col s8 offset-s2" style="width:4000; overflow: auto;white-space: nowrap;">
-            <a ng-repeat="contact in contacts" class="btn-floating btn-large waves-effect waves-light red"
+            <a ng-repeat="contact in contacts" class="btn-floating btn-large waves-effect waves-light"
                 ng-click="changeContact(contact.Username, contact.Email)" style="display: inline-block">
                 <img src="../images/{{contact.Pic}}" alt="" class="avatar" style="display: inline-block">
             </a>
